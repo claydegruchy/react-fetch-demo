@@ -15,8 +15,6 @@ const getPerson = async (querystring) => {
   return data[0];
 };
 
-
-
 // define our default ui state
 var defaultUiParams = {
   // this is used make sure we dont load the page before everything is done
@@ -43,7 +41,7 @@ function App() {
 
   useEffect(() => {
     // Stuff to do when uiOptions changes
-    console.log("the ui state was updated to" ,{uiOptions})
+    console.log("the ui state was updated to", { uiOptions });
   }, [uiOptions]);
 
   const DisplayPerson = (person, i) => {
@@ -82,12 +80,14 @@ function App() {
         <div className={"horizontal"}>
           <div
             className={"highlighted link-hover control-box"}
+            // this argument references the above function
             onClick={updateData}
           >
             Add a new person
           </div>
           <div
             className={"highlighted link-hover control-box"}
+            // this argument references the above function
             onClick={clearData}
           >
             Clear list
@@ -104,14 +104,22 @@ function App() {
               })
             }
           >
-            {uiOptions.showPeopleList?'Hide list':'Show list'}
+        {/*short if condition to toggle the text here*/}
+            {uiOptions.showPeopleList ? "Hide list" : "Show list"}
           </div>
         </div>
-{uiOptions.showPeopleList?  <div className={"control-box"}>
-          <>People</>
-          <>{people.map(DisplayPerson)}</>
-        </div>:<div className={"control-box"}>List hidden!</div>}
-      
+        <div className={"control-box"}>
+          {uiOptions.showPeopleList ? (
+            // here we are using empty elemements (<>) to fill the gap of seperating this text
+            // empty elements dont do shit once they render, they just keep react happy
+            <>
+              <>People</>
+              <>{people.map(DisplayPerson)}</>
+            </>
+          ) : (
+            <div className={"control-box"}>List hidden!</div>
+          )}
+        </div>
       </div>
     </div>
   );
